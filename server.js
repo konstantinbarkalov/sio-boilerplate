@@ -13,4 +13,11 @@ app.use('/app.js', babelify('public/js/app.js'))
 
 app.use(express.static('public/static'));
 
+
+
+
+
+
+
+
 let serverLogic = new ServerLogic(sio);

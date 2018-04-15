@@ -1,9 +1,24 @@
 'use strict';
+const AudioGetter = require('./audioGetter.js');
+const bufferToArray = require('./bufferToArray.js');
 function ServerLogic(sio) {
   const that = this;
   console.log('serverLogic started');
   function init() {
     
+    function callback(chunk) {
+      //  -> sound
+      //console.log('ORIGINALCHUNK', chunk.length, chunk);    
+      let array = bufferToArray(chunk);
+      console.log('CONVERTEDCHUNK', array.length, array);    
+      
+      //  to browser ->
+      sio.emit('chunk', array);
+    }
+
+    let audioGetter = new AudioGetter(callback);
+
+    ////////
     setInterval(() => {
       sio.emit('hola', 'hola text');
     }, 2000);
