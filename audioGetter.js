@@ -3,19 +3,14 @@ let Mic = require('node-microphone');
 
 
 function AudioGetter(callback) {
-  //this.init = function() {};
-
+  
   let options = {
   };
   let mic = new Mic(options);
   let micStream = mic.startRecording();
   
-  //micStream.pipe( myWritableStream );
-  //micStream.pipe( process.stdout );
-  
-  micStream.on('data', function(chunk) {
-    callback(chunk);
-    //let azaza = chunk.readInt16LE(0, chunk.length).toString(16); 
+  micStream.on('data', function(rawbuffer) {
+    callback(rawbuffer);
   });
     
   
@@ -32,8 +27,6 @@ function AudioGetter(callback) {
     console.log(error);
   });
   
-  
-
 }
 
 module.exports = AudioGetter;

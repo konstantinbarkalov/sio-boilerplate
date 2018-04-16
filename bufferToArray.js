@@ -1,19 +1,15 @@
 'use strict';
-function bufferToArray(buffer) {
-  // =<                0   2,  4 ....n 16k
-  //          buffer  x2  x2, x2 ...   16k               to []
+function bufferToArray(rawbuffer) {
 
-  let byteLength = buffer.length;
-  let actualLength = byteLength / 2;
-  let array = [];
-  for (var i = 0; i < actualLength; i++) {
-    let indexInArray = i;
-    let indexInBuffer = i * 2;
-    
-    let actualValue = buffer.readInt16LE(indexInBuffer);
-    array[indexInArray] = actualValue;
-    //console.log('now i is:', i);
+  let rawbufferByteLength = rawbuffer.length;
+  let audiobufferLength = rawbufferByteLength / 2;
+  let audiobuffer = [];
+  for (var i = 0; i < audiobufferLength; i++) {
+    let indexInAudiobuffer = i;
+    let indexInRawbuffer = i * 2;
+    let decoded16bitValue = rawbuffer.readInt16LE(indexInRawbuffer);
+    audiobuffer[indexInAudiobuffer] = decoded16bitValue;
   }
-  return array;
+  return audiobuffer;
 }
 module.exports = bufferToArray;
